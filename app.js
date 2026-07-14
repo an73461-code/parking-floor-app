@@ -4,7 +4,7 @@
   var KEY_FLOORS = "parking:floors";
   var KEY_CURRENT = "parking:current";
   var KEY_HISTORY = "parking:history";
-  var DEFAULT_FLOORS = ["B1", "B2", "B3", "B4", "B5"];
+  var DEFAULT_FLOORS = ["지상1층", "지하1층", "지하2층", "지하3층", "지하4층"];
   var MAX_HISTORY = 10;
 
   var els = {
