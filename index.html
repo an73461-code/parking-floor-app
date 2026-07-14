@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<title>내 주차위치</title>
+
+<!-- iOS 홈 화면 앱처럼 동작하게 하는 설정 -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="내 주차위치">
+<meta name="theme-color" content="#12141c">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- 상단바 -->
+  <header class="topbar">
+    <h1>내 주차위치</h1>
+    <button id="settingsBtn" class="icon-btn" aria-label="설정">⚙️</button>
+  </header>
+
+  <!-- 화면1: 등록된 주차 위치가 없을 때 -> 층 선택 -->
+  <section id="registerScreen" class="screen">
+    <p class="hint">주차하셨나요?<br>지금 계신 층을 눌러서 등록하세요</p>
+    <div id="floorGrid" class="floor-grid"></div>
+    <button id="addDetailToggle" class="link-btn">+ 구역/메모 미리 입력</button>
+    <div id="preDetail" class="detail-box hidden">
+      <input id="preZone" type="text" placeholder="구역/기둥 번호 (예: A구역, 43번 기둥)" maxlength="30">
+      <textarea id="preMemo" placeholder="메모 (선택)" maxlength="60" rows="2"></textarea>
+    </div>
+  </section>
+
+  <!-- 화면2: 등록된 주차 위치 보여주기 -->
+  <section id="statusScreen" class="screen hidden">
+    <div class="park-card">
+      <div class="park-card-label">현재 주차 위치</div>
+      <div id="parkFloor" class="park-floor">B3</div>
+      <div id="parkZone" class="park-zone"></div>
+      <div id="parkMemo" class="park-memo"></div>
+      <div id="parkTime" class="park-time"></div>
+    </div>
+
+    <div id="photoWrap" class="photo-wrap hidden">
+      <img id="parkPhoto" alt="주차 위치 사진">
+    </div>
+
+    <div class="action-row">
+      <label class="btn btn-secondary photo-btn">
+        📷 사진 <span id="photoLabelState"></span>
+        <input id="photoInput" type="file" accept="image/*" capture="environment" hidden>
+      </label>
+      <button id="editBtn" class="btn btn-secondary">✏️ 위치 수정</button>
+    </div>
+    <button id="foundBtn" class="btn btn-primary btn-large">🚗 찾았어요 (초기화)</button>
+  </section>
+
+  <!-- 최근 기록 -->
+  <section class="history">
+    <button id="historyToggle" class="link-btn">최근 기록 보기 ▾</button>
+    <ul id="historyList" class="history-list hidden"></ul>
+  </section>
+
+</div>
+
+<!-- 설정 모달 -->
+<div id="settingsModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>설정</h2>
+    <label class="modal-label">주차장 층 목록 (쉼표로 구분)</label>
+    <input id="floorListInput" type="text" placeholder="예: B1,B2,B3,B4,B5">
+    <div class="modal-actions">
+      <button id="saveFloorsBtn" class="btn btn-primary">저장</button>
+    </div>
+    <hr>
+    <button id="resetAllBtn" class="btn btn-danger">모든 기록 초기화</button>
+    <button id="closeSettingsBtn" class="btn btn-secondary">닫기</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
