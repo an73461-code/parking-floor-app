@@ -36,7 +36,32 @@
     saveFloorsBtn: document.getElementById("saveFloorsBtn"),
     resetAllBtn: document.getElementById("resetAllBtn"),
     closeSettingsBtn: document.getElementById("closeSettingsBtn"),
+
+    confirmModal: document.getElementById("confirmModal"),
+    confirmMessage: document.getElementById("confirmMessage"),
+    confirmOkBtn: document.getElementById("confirmOkBtn"),
+    confirmCancelBtn: document.getElementById("confirmCancelBtn"),
   };
+
+  function showConfirm(message, onConfirm) {
+    els.confirmMessage.textContent = message;
+    els.confirmModal.classList.remove("hidden");
+
+    function cleanup() {
+      els.confirmModal.classList.add("hidden");
+      els.confirmOkBtn.removeEventListener("click", onOk);
+      els.confirmCancelBtn.removeEventListener("click", onCancel);
+    }
+    function onOk() {
+      cleanup();
+      onConfirm();
+    }
+    function onCancel() {
+      cleanup();
+    }
+    els.confirmOkBtn.addEventListener("click", onOk);
+    els.confirmCancelBtn.addEventListener("click", onCancel);
+  }
 
   var floors = loadFloors();
   var current = loadCurrent();
@@ -245,11 +270,12 @@
 
   els.foundBtn.addEventListener("click", function () {
     if (!current) return;
-    if (!confirm("차를 찾으셨나요? 현재 주차 기록을 초기화합니다.")) return;
-    var record = Object.assign({}, current, { foundAt: Date.now() });
-    pushHistory(record);
-    saveCurrent(null);
-    render();
+    showConfirm("차를 찾으셨나요? 현재 주차 기록을 초기화합니다.", function () {
+      var record = Object.assign({}, current, { foundAt: Date.now() });
+      pushHistory(record);
+      saveCurrent(null);
+      render();
+    });
   });
 
   els.photoInput.addEventListener("change", function (e) {
@@ -293,16 +319,17 @@
   });
 
   els.resetAllBtn.addEventListener("click", function () {
-    if (!confirm("모든 주차 기록과 설정을 초기화할까요?")) return;
-    localStorage.removeItem(KEY_CURRENT);
-    localStorage.removeItem(KEY_HISTORY);
-    localStorage.removeItem(KEY_FLOORS);
-    floors = DEFAULT_FLOORS.slice();
-    current = null;
-    editing = false;
-    renderFloorGrid();
-    render();
-    els.settingsModal.classList.add("hidden");
+    showConfirm("모든 주차 기록과 설정을 초기화할까요?", function () {
+      localStorage.removeItem(KEY_CURRENT);
+      localStorage.removeItem(KEY_HISTORY);
+      localStorage.removeItem(KEY_FLOORS);
+      floors = DEFAULT_FLOORS.slice();
+      current = null;
+      editing = false;
+      renderFloorGrid();
+      render();
+      els.settingsModal.classList.add("hidden");
+    });
   });
 
   // init

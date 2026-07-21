@@ -1,4 +1,4 @@
-var CACHE_NAME = "parking-app-v2";
+var CACHE_NAME = "parking-app-v3";
 var ASSETS = [
   "./",
   "./index.html",

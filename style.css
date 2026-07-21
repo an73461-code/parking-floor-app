@@ -239,6 +239,7 @@ input[type="text"]::placeholder, textarea::placeholder { color: var(--text-dim);
 }
 .modal-content h2 { margin: 0 0 14px; font-size: 18px; }
 .modal-label { display: block; font-size: 13px; color: var(--text-dim); margin-bottom: 6px; }
-.modal-actions { margin-top: 12px; display: flex; }
+.modal-actions { margin-top: 12px; display: flex; gap: 10px; }
+.confirm-message { font-size: 15px; line-height: 1.5; margin: 4px 0 4px; }
 .modal-content hr { border: none; border-top: 1px solid #2c3040; margin: 18px 0; }
 .modal-content .btn { width: 100%; margin-top: 10px; }
